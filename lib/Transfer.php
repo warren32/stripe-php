@@ -58,6 +58,21 @@ class Transfer extends ApiResource
         $this->refreshFrom($response, $opts);
         return $this;
     }
+    
+    /**
+     * @param array|null $params
+     *
+     * @return array An array of the transfer's BalanceTransactions.
+     */
+    public function transactions($params = null)
+    {
+        if (!$params) {
+            $params = array();
+        }
+        $params['transfer'] = $this->id;
+        $transactions = BalanceTransaction::all($params, $this->_opts);
+        return $transactions;
+    }
 
     /**
      * @param array|string|null $opts
